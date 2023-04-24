@@ -55,7 +55,8 @@ function fetchOption (event) {
             success (resp) {
                 const data = []
                 resp.data.forEach((item) => {
-                    if (item[0].indexOf('复刻') !== -1 || item[0].indexOf('签到') !== -1 || item[0].indexOf('活动') !== -1) {
+                    if (item[0].indexOf('复刻') !== -1 || item[0].indexOf('签到') !== -1 ||
+                        item[0].indexOf('活动') !== -1 || item[0].indexOf('登录') !== -1) {
                         return
                     }
                     dataCache[item[0]] = item[1]
