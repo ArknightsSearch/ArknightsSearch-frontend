@@ -135,7 +135,7 @@ const zoneDict = {
                 style="margin-top: 10px"
                 layout="prev, pager, next"
                 :page-count="pageNum"
-                :pager-count="11"
+                :pager-count="7"
                 :current-page="currPage"
                 @update:current-page="setCurrPage"
                 hide-on-single-page
