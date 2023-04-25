@@ -69,6 +69,7 @@ function setCurrPage (value) {
         }
     })
     offset.value = (value - 1) * pageSize
+    scrollTo(0, 0)
     search()
 }
 
