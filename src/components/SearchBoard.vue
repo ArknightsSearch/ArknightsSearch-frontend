@@ -111,6 +111,17 @@ const zoneDict = {
         </div>
     </div>
     <div style="width: 100%">
+        <div style="display: flex; justify-content: center">
+            <el-pagination
+                style="margin-bottom: 10px"
+                layout="prev, pager, next"
+                :page-count="pageNum"
+                :pager-count="7"
+                :current-page="currPage"
+                @update:current-page="setCurrPage"
+                hide-on-single-page
+            />
+        </div>
         <el-collapse>
             <el-collapse-item :key="''+offset+index" v-for="(data,index) in result">
                 <template #title>
