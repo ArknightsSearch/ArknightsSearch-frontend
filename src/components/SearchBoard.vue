@@ -16,6 +16,7 @@ const pageNum = ref(1)
 const currPage = ref(1)
 const offset = ref(0)
 const total = ref(0)
+const searched = ref(false)
 
 onMounted(() => {
     if (params.value.length === 0) {
@@ -43,6 +44,7 @@ function goBack () {
 }
 
 function search () {
+    searched.value = false
     getParams((params) => {
         api.post({
             url: 'story',
@@ -55,6 +57,11 @@ function search () {
                 result.value = resp.data.data
                 total.value = resp.data.total
                 pageNum.value = Math.ceil(resp.data.total / pageSize) || 1
+                searched.value = true
+            },
+            error () {
+                total.value = 0
+                searched.value = false
             }
         })
     })
@@ -93,7 +100,7 @@ const zoneDict = {
             </svg>
             返回
         </h2>
-        <div style="flex-grow: 1; display: flex; justify-content: right; align-items: end">
+        <div style="flex-grow: 1; display: flex; justify-content: right; align-items: end" v-if="total">
             <small><strong>
                 <template v-if="total - offset === 1">
                     第{{ total }}条结果
@@ -111,7 +118,7 @@ const zoneDict = {
 
         </div>
     </div>
-    <div style="width: 100%">
+    <div style="width: 100%" v-if="total">
         <div style="display: flex; justify-content: center">
             <el-pagination
                 style="margin-bottom: 10px"
@@ -160,5 +167,10 @@ const zoneDict = {
                 hide-on-single-page
             />
         </div>
+    </div>
+    <div v-else-if="searched" style="display: flex; align-items: center; flex-flow: column; color: dimgrey">
+        <el-divider/>
+        <h2>无结果</h2>
+        <p>换个姿势搜索吧</p>
     </div>
 </template>
