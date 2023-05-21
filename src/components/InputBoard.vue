@@ -20,6 +20,10 @@ function createParam () {
 }
 
 function deleteParam (index) {
+    if (params.value.length === 1) {
+        clearParam()
+        return
+    }
     params.value.splice(index, 1)
     ids.value.splice(index, 1)
     syncParams()
@@ -72,7 +76,8 @@ function toSearch () {
 
     />
     <div style="width: 100%; display: flex; justify-content: right; margin-top: 20px">
-        <el-button style="width: min(120px, 40%)" @click="clearParam">重置</el-button>
-        <el-button style="width: min(120px, 40%)" @click="toSearch">搜索</el-button>
+        <el-button style="width: min(120px, 25%)" @click="clearParam">重置</el-button>
+        <el-button style="width: min(120px, 25%)" @click="createParam">添加</el-button>
+        <el-button style="width: min(120px, 25%)" @click="toSearch">搜索</el-button>
     </div>
 </template>
