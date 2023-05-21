@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import router from '@/router'
 import Requests from '@/lib/requests'
@@ -17,6 +17,7 @@ const currPage = ref(1)
 const offset = ref(0)
 const total = ref(0)
 const searched = ref(false)
+const errorStatus = ref(false)
 
 onMounted(() => {
     if (params.value.length === 0) {
@@ -58,10 +59,13 @@ function search () {
                 total.value = resp.data.total
                 pageNum.value = Math.ceil(resp.data.total / pageSize) || 1
                 searched.value = true
+                errorStatus.value = false
             },
-            error () {
+            error (resp) {
+                console.log(resp)
                 total.value = 0
                 searched.value = false
+                errorStatus.value = resp.code + ' ' + resp.request.status
             }
         })
     })
@@ -118,7 +122,12 @@ const zoneDict = {
 
         </div>
     </div>
-    <div style="width: 100%" v-if="total">
+    <div v-if="errorStatus" style="display: flex; align-items: center; flex-flow: column; color: dimgrey">
+        <el-divider/>
+        <h2>呜，服务器崩溃了</h2>
+        <p>Code: {{ errorStatus }}</p>
+    </div>
+    <div style="width: 100%" v-else-if="total">
         <div style="display: flex; justify-content: center">
             <el-pagination
                 style="margin-bottom: 10px"
