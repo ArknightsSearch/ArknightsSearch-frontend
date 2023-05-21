@@ -30,9 +30,11 @@ function deleteParam (index) {
 }
 
 function clearParam () {
-    params.value = [{}]
-    ids.value = [Date.now()]
-    syncParams()
+    message.confirm('是否重置', '提示', () => {
+        params.value = [{}]
+        ids.value = [Date.now()]
+        syncParams()
+    })
 }
 
 onMounted(() => {
