@@ -136,8 +136,15 @@ const zoneDict = {
                 </template>
                 <div style="display: flex; justify-content: center">
                     <div style="width: 90%">
-                        <component v-for="(extra,index) in data.data" :is="extraDict[extra.type]"
-                                   :data="extra" :key="index"/>
+                        <template v-if="data.data.length">
+                            <component v-for="(extra,index) in data.data" :is="extraDict[extra.type]"
+                                       :data="extra" :key="index"/>
+                        </template>
+                        <template v-else>
+                            <div style="display: flex; justify-content: center; align-items: center">
+                                <h2 style="color: grey">无数据</h2>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </el-collapse-item>
