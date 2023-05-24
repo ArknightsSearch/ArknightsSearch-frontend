@@ -9,8 +9,7 @@ const api = new Requests({
 const params = ref([])
 
 const dataCache = {
-    zone: {},
-    char: {}
+    zone: {}
 }
 
 function fetchZoneData (name, cb) {
@@ -35,30 +34,8 @@ function fetchZoneData (name, cb) {
     })
 }
 
-function fetchCharData (name, cb) {
-    if (Object.prototype.hasOwnProperty.call(dataCache.char, name)) {
-        cb && cb()
-        return
-    }
-
-    api.get({
-        url: 'npc/search',
-        data: {
-            text: name,
-            lang: 1,
-            output: 4,
-            mode: 4
-        },
-        success (resp) {
-            dataCache.char[name] = resp.data
-            cb && cb()
-        }
-    })
-}
-
 const fetchDict = {
-    zone: fetchZoneData,
-    char: fetchCharData
+    zone: fetchZoneData
 }
 
 function fetchData (cb) {
@@ -126,7 +103,6 @@ export {
     dataCache,
     params,
     fetchZoneData,
-    fetchCharData,
     fetchData,
     getParams
 }
