@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed } from 'vue'
-import Requests from '@/lib/requests'
 import { dataCache, api } from '@/lib/params'
 
 const props = defineProps({
