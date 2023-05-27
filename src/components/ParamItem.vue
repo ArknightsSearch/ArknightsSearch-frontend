@@ -33,8 +33,10 @@ const param = computed({
 })
 
 const optionList = ref([])
+const optionInput = ref('')
 
 function fetchOption (event) {
+    optionInput.value = event.target.value
     if (!event.target.value) {
         optionList.value = []
         return
@@ -80,6 +82,12 @@ function fetchOption (event) {
     }
 }
 
+function autoSelect () {
+    if (optionInput.value === optionList.value[0]) {
+        param.value.value = optionInput.value
+    }
+}
+
 </script>
 
 <template>
@@ -103,7 +111,8 @@ function fetchOption (event) {
             </template>
             <template v-else-if="param.type==='zone' || param.type==='char'">
                 <el-select style="flex-grow: 1" class="item-center" placeholder="输入名称以搜索" v-model="param.value"
-                           filterable remote @input="fetchOption" :filter-method="(p) => {}" @change="$emit('edit')">
+                           filterable remote @input="fetchOption" :filter-method="(p) => {}" @change="$emit('edit')"
+                           @blur="autoSelect">
                     <el-option
                         v-for="option in optionList"
                         :key="option"
