@@ -90,7 +90,7 @@ function toSearch () {
                     </template>
                     <h2>ArkSearch</h2>
                     <p>本项目仍处于开发状态，如有建议欢迎入交流群反馈</p>
-                    <p style="display: flex">如遇到角色名称错误，可填写
+                    <p style="display: flex; align-items: center">如遇到角色名称错误，可填写
                         <el-link href="https://wj.qq.com/s2/12441816/47cc/" target="_blank" type="primary">此问卷
                         </el-link>
                     </p>
