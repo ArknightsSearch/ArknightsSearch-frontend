@@ -83,8 +83,9 @@ function fetchOption (event) {
 }
 
 function autoSelect () {
-    if (optionInput.value === optionList.value[0]) {
+    if (optionInput.value === optionList.value[0] && param.value.value !== optionInput.value) {
         param.value.value = optionInput.value
+        emit('edit')
     }
 }
 
