@@ -9,7 +9,7 @@
                     <div style="margin: 10px 0; display: flex; width: 100%">
                         <h1 style="margin: 0">ArkSearch | 剧情搜索</h1>
                         <div style="justify-content: right; display: flex; flex-grow: 1">
-                            <a href="https://github.com/ArknightsSearch">
+                            <a href="https://github.com/ArknightsSearch/ArknightsSearch-backend/">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98 96"
                                      style="height: 100%">
                                     <path fill-rule="evenodd" clip-rule="evenodd"
