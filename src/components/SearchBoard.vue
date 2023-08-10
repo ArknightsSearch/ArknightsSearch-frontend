@@ -126,8 +126,9 @@ const zoneDict = {
   </div>
   <div v-if="errorStatus" style="display: flex; align-items: center; flex-flow: column; color: dimgrey">
     <el-divider/>
-    <h2 v-if="errorCode>=500">呜，服务器崩溃了</h2>
-    <h2 v-else-if="errorCode===429">请求太快啦，慢一点吧</h2>
+    <h2 v-if="errorCode===429">请求太快啦，慢一点吧</h2>
+    <h2 v-else-if="errorCode===408">处理超时，试着减少参数吧</h2>
+    <h2 v-else-if="errorCode>=500">呜，服务器崩溃了</h2>
     <h2 v-else-if="errorCode>=400">请求失败，换个方式吧</h2>
     <h2 v-else>未知错误</h2>
     <p>Code: {{ errorStatus }}</p>
