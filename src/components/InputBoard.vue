@@ -14,8 +14,8 @@ params.value.forEach((e) => {
 const route = useRoute()
 
 function createParam () {
-    if (params.value.length >= 10) {
-        message.notify('目前最大支持10条参数，请缩减参数数量', message.warning)
+    if (params.value.length >= 20) {
+        message.notify('目前最大支持20条参数，请缩减参数数量', message.warning)
         return
     }
     params.value.push({})
