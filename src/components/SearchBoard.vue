@@ -18,7 +18,7 @@ const offset = ref(0)
 const total = ref(0)
 const searched = ref(false)
 const errorStatus = ref(false)
-const errorCode = ref(0)
+const errorResponse = ref(0)
 
 onMounted(() => {
     if (params.value.length === 0) {
@@ -63,11 +63,10 @@ function search () {
                 errorStatus.value = false
             },
             error (resp) {
-                console.log(resp)
                 total.value = 0
                 searched.value = false
                 errorStatus.value = resp.code + ' ' + resp.request.status
-                errorCode.value = resp.request.status
+                errorResponse.value = resp
             }
         })
     })
@@ -126,10 +125,14 @@ const zoneDict = {
   </div>
   <div v-if="errorStatus" style="display: flex; align-items: center; flex-flow: column; color: dimgrey">
     <el-divider/>
-    <h2 v-if="errorCode===429">请求太快啦，慢一点吧</h2>
-    <h2 v-else-if="errorCode===408">处理超时，试着减少参数吧</h2>
-    <h2 v-else-if="errorCode>=500">呜，服务器崩溃了</h2>
-    <h2 v-else-if="errorCode>=400">请求失败，换个方式吧</h2>
+    <template v-if="errorResponse.response.status===440">
+      <h2>正则表达式语法错误</h2>
+      <p style="margin-top: 0"><i>{{ errorResponse.response.data.detail }}</i></p>
+    </template>
+    <h2 v-else-if="errorResponse.response.status===429">请求太快啦，慢一点吧</h2>
+    <h2 v-else-if="errorResponse.response.status===408">处理超时，试着减少参数吧</h2>
+    <h2 v-else-if="errorResponse.response.status>=500">呜，服务器崩溃了</h2>
+    <h2 v-else-if="errorResponse.response.status>=400">请求失败，换个方式吧</h2>
     <h2 v-else>未知错误</h2>
     <p>Code: {{ errorStatus }}</p>
     <p style="cursor:pointer;" @click="search">点我重新加载</p>
