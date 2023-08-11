@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import router from '@/router'
+import StoryJump from '@/components/StoryJump.vue'
 import Requests from '@/lib/requests'
 import { params, getParams } from '@/lib/params'
 import { StoryApi, pageSize } from '@/lib/constant'
@@ -19,6 +20,8 @@ const total = ref(0)
 const searched = ref(false)
 const errorStatus = ref(false)
 const errorResponse = ref(0)
+
+const storyJumpRef = ref(null)
 
 onMounted(() => {
     if (params.value.length === 0) {
@@ -91,10 +94,10 @@ const zoneDict = {
     Rogue: '集成战略',
     Activity: '活动'
 }
-
 </script>
 
 <template>
+  <StoryJump ref="storyJumpRef"/>
   <div style="display: flex; margin: 20px 0">
     <h2 style="display: flex; align-items: center; cursor: pointer; margin: 0" @click="goBack">
       <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" data-v-ea893728=""
@@ -171,6 +174,9 @@ const zoneDict = {
                 <h2 style="color: grey">无数据</h2>
               </div>
             </template>
+            <div style="width: 100%; display: flex; justify-content: right">
+              <el-link type="primary" :underline="false" @click="storyJumpRef.show(data)">阅读全文</el-link>
+            </div>
           </div>
         </div>
       </el-collapse-item>
