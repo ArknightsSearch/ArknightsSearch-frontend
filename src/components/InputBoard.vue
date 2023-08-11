@@ -87,30 +87,30 @@ function toSearch () {
   </div>
   <div style="width: 100%; margin-top: 20px; display: flex; justify-content: center">
     <div style="width: 95%">
-      <el-collapse>
-        <el-collapse-item>
-          <template #title>
-            我不是公告，别点我
-          </template>
-          <h2>ArkSearch</h2>
-          <p>本项目仍处于开发状态，如有建议欢迎入交流群反馈</p>
-          <p style="display: flex; align-items: center">如遇到角色名称错误，可填写
-            <el-link href="https://wj.qq.com/s2/12441816/47cc/" target="_blank" type="primary">此问卷
-            </el-link>
-          </p>
-          <div style="display: flex; margin-top: 10px">
-            <el-link href="https://jq.qq.com/?_wv=1027&k=ImatbCzG" style="margin-right: 5px"
-                     target="_blank">
-              交流群：560295639
-            </el-link>
-            <span style="border-left: solid 1px darkgrey"></span>
-            <el-link href="https://github.com/Arkfans/MayerTalk" style="margin: 0 5px;"
-                     target="_blank">
-              GitHub
-            </el-link>
-          </div>
-        </el-collapse-item>
-      </el-collapse>
+      <!--      <el-collapse>-->
+      <!--        <el-collapse-item>-->
+      <!--          <template #title>-->
+      <!--            我不是公告，别点我-->
+      <!--          </template>-->
+      <el-divider/>
+      <h2>ArkSearch</h2>
+      <p>本项目仍处于开发状态，如有建议欢迎入交流群反馈</p>
+      <p style="display: flex; align-items: center">如遇到角色名称错误，可填写
+        <el-link href="https://wj.qq.com/s2/12441816/47cc/" target="_blank">此问卷</el-link>
+      </p>
+      <div style="display: flex; margin-top: 10px">
+        <el-link href="https://jq.qq.com/?_wv=1027&k=ImatbCzG" style="margin-right: 5px"
+                 target="_blank">
+          交流群：560295639
+        </el-link>
+        <span style="border-left: solid 1px darkgrey"></span>
+        <el-link href="https://github.com/Arkfans/MayerTalk" style="margin: 0 5px;"
+                 target="_blank">
+          GitHub
+        </el-link>
+      </div>
+      <!--        </el-collapse-item>-->
+      <!--      </el-collapse>-->
     </div>
 
   </div>
