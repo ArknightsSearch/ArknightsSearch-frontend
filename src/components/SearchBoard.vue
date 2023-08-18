@@ -155,12 +155,20 @@ const zoneDict = {
     <el-collapse>
       <el-collapse-item :key="''+offset+index" v-for="(data,index) in result">
         <template #title>
-          <div style="display: flex; width: 100%">
-            <p style="min-width: 70px; text-align: center; margin: 0; padding: 0 5px">{{ zoneDict[data.type] }}</p>
+          <div style="display: flex; width: calc(100% - 21px); flex: 0 2 auto">
+            <div style="display: flex; width: 70px; justify-content: center; margin: 0; padding: 0 5px; flex: 0 2 auto">
+              {{ zoneDict[data.type] }}
+            </div>
             |
-            <p style="min-width: 100px; text-align: center; margin: 0; padding: 0 5px">{{ data.zone }}</p>
+            <div
+                style="display:flex;min-width: 100px;  justify-content: center; margin: 0; padding: 0 5px; flex: 0 2 auto">
+              {{ data.zone }}
+            </div>
             |
-            <p style=" margin: 0 0 0 15px;"> {{ data.name }}</p>
+            <div
+                style="display: flex; padding: 0 5px 0 15px; flex: 0 1 auto; word-break: keep-all; white-space: nowrap">
+              {{ data.name }}
+            </div>
           </div>
         </template>
         <div style="display: flex; justify-content: center">
