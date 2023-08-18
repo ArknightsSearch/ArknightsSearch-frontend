@@ -91,11 +91,17 @@ onMounted(() => {
             <div style="min-width: 100px; text-align: right; color: gray; margin-right: 10px">{{ data[0] }}</div>
             <div>{{ data[1] }}</div>
         </div>
+          <div style="display: flex; margin: 20px 0">
+        <h2 style="display: flex; align-items: center; cursor: pointer; margin: 0 0 100px 0" @click="goBack">
+            返回
+        </h2>
+    </div>
     </div>
    <div v-else>
     <div v-loading="loading" style="width: 100%; height: 300px">
     </div>
   </div>
+
 </template>
 
 <style scoped>
