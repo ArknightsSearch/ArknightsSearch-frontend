@@ -23,6 +23,7 @@ function goBack () {
 
 const text = ref(null)
 const title = ref(null)
+const loading = ref(true)
 
 function parseText (data) {
     const result = []
@@ -91,6 +92,10 @@ onMounted(() => {
             <div>{{ data[1] }}</div>
         </div>
     </div>
+   <div v-else>
+    <div v-loading="loading" style="width: 100%; height: 300px">
+    </div>
+  </div>
 </template>
 
 <style scoped>

@@ -224,7 +224,7 @@ const zoneDict = {
     <p>换个姿势搜索吧</p>
   </div>
   <div v-else>
-    <div v-loading="loading" style="width: 100%; height: 300px">
+    <div v-loading="loading" style="width: 100%; height: 400px">
     </div>
   </div>
 </template>
