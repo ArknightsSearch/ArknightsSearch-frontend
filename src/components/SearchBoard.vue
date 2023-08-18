@@ -20,6 +20,7 @@ const total = ref(0)
 const searched = ref(false)
 const errorStatus = ref(false)
 const errorResponse = ref(0)
+const loading = ref(true)
 
 const storyJumpRef = ref(null)
 
@@ -50,6 +51,8 @@ function goBack () {
 
 function search () {
     searched.value = false
+    loading.value = true
+    const startTime = Date.now()
     getParams((params) => {
         api.post({
             url: 'story',
@@ -59,17 +62,31 @@ function search () {
                 limit: pageSize
             },
             success (resp) {
-                result.value = resp.data.data
-                total.value = resp.data.total
-                pageNum.value = Math.ceil(resp.data.total / pageSize) || 1
-                searched.value = true
-                errorStatus.value = false
+                const diff = Date.now() - startTime
+                if (diff < 500) {
+                    setTimeout(() => {
+                        result.value = resp.data.data
+                        total.value = resp.data.total
+                        pageNum.value = Math.ceil(resp.data.total / pageSize) || 1
+                        searched.value = true
+                        errorStatus.value = false
+                        loading.value = false
+                    }, 500 - diff)
+                } else {
+                    result.value = resp.data.data
+                    total.value = resp.data.total
+                    pageNum.value = Math.ceil(resp.data.total / pageSize) || 1
+                    searched.value = true
+                    errorStatus.value = false
+                    loading.value = false
+                }
             },
             error (resp) {
                 total.value = 0
                 searched.value = false
                 errorStatus.value = resp.code + ' ' + resp.request.status
                 errorResponse.value = resp
+                loading.value = false
             }
         })
     })
@@ -140,7 +157,7 @@ const zoneDict = {
     <p>Code: {{ errorStatus }}</p>
     <p style="cursor:pointer;" @click="search">点我重新加载</p>
   </div>
-  <div style="width: 100%" v-else-if="total">
+  <div style="width: 100%" v-loading="loading" v-else-if="total">
     <div style="display: flex; justify-content: center">
       <el-pagination
           style="margin-bottom: 10px"
@@ -205,5 +222,9 @@ const zoneDict = {
     <el-divider/>
     <h2>无结果</h2>
     <p>换个姿势搜索吧</p>
+  </div>
+  <div v-else>
+    <div v-loading="loading" style="width: 100%; height: 300px">
+    </div>
   </div>
 </template>
