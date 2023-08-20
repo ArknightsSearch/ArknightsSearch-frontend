@@ -49,6 +49,20 @@ function goBack () {
     router.push({ path: '/input', query: { params: route.query.params } })
 }
 
+function formatResult (data) {
+    const result = []
+    data.forEach((i) => {
+        result.push({
+            id: i[0],
+            type: i[1],
+            name: i[2],
+            zone: i[3],
+            extra: i[4]
+        })
+    })
+    return result
+}
+
 function search () {
     searched.value = false
     loading.value = true
@@ -59,13 +73,14 @@ function search () {
             data: {
                 params,
                 offset: offset.value,
-                limit: pageSize
+                limit: pageSize,
+                require: 403
             },
             success (resp) {
                 const diff = Date.now() - startTime
                 if (diff < 500) {
                     setTimeout(() => {
-                        result.value = resp.data.data
+                        result.value = formatResult(resp.data.data)
                         total.value = resp.data.total
                         pageNum.value = Math.ceil(resp.data.total / pageSize) || 1
                         searched.value = true
@@ -73,7 +88,7 @@ function search () {
                         loading.value = false
                     }, 500 - diff)
                 } else {
-                    result.value = resp.data.data
+                    result.value = formatResult(resp.data.data)
                     total.value = resp.data.total
                     pageNum.value = Math.ceil(resp.data.total / pageSize) || 1
                     searched.value = true
@@ -190,8 +205,8 @@ const zoneDict = {
         </template>
         <div style="display: flex; justify-content: center">
           <div style="width: 90%">
-            <template v-if="data.data.length">
-              <component v-for="(extra,index) in data.data" :is="extraDict[extra.type]"
+            <template v-if="data.extra.length">
+              <component v-for="(extra,index) in data.extra" :is="extraDict[extra.type]"
                          :data="extra" :key="index"/>
             </template>
             <template v-else>
