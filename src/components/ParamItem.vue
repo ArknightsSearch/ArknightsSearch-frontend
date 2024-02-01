@@ -48,7 +48,7 @@ function fetchOption (event) {
             url: 'alias/search',
             data: {
                 text: event.target.value,
-                type: 64,
+                type: 65600,
                 lang: 1,
                 output: 6,
                 mode: 14,

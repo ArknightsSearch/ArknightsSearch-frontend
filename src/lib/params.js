@@ -22,7 +22,7 @@ function fetchZoneData (name, cb) {
         url: 'name/search',
         data: {
             text: name,
-            type: 64,
+            type: 65600,
             lang: 1,
             output: 4,
             mode: 4
