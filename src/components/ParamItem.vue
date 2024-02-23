@@ -48,9 +48,9 @@ function fetchOption (event) {
             url: 'alias/search',
             data: {
                 text: event.target.value,
-                type: 65600,
+                type: 73792,
                 lang: 1,
-                output: 6,
+                output: 14,
                 mode: 14,
                 include_origin: true
             },
@@ -58,7 +58,9 @@ function fetchOption (event) {
                 const data = []
                 resp.data.forEach((item) => {
                     if (item[0].indexOf('复刻') !== -1 || item[0].indexOf('签到') !== -1 ||
-              item[0].indexOf('活动') !== -1 || item[0].indexOf('登录') !== -1) {
+                        item[0].indexOf('活动') !== -1 || item[0].indexOf('登录') !== -1) {
+                        return
+                    } else if (item[2] === 8192 && !item[1].startsWith('main')) {
                         return
                     }
                     dataCache[item[0]] = item[1]
@@ -93,84 +95,84 @@ function autoSelect () {
 </script>
 
 <template>
-  <div>
-    <div style="width: 100%; display: flex">
-      <el-select v-model="param.type" style="width: 80px; flex-shrink: 0" class="item-left"
-                 placeholder="类型" @change="param.value=null; fakeValue=null; optionList=[]; $emit('edit')">
-        <el-option
-            v-for="(label,key) in SelectType"
-            :key="key"
-            :label="label"
-            :value="key"
-        />
-      </el-select>
-      <template v-if="!param.type">
-        <el-input style="flex-grow: 1" class="item-center" disabled placeholder="请选择类型"></el-input>
-      </template>
-      <template v-else-if="param.type === 'text' || param.type === 'regex'">
-        <el-input style="flex-grow: 1" class="item-center" v-model="param.value"
-                  @change="$emit('edit')"></el-input>
-      </template>
-      <template v-else-if="param.type==='zone' || param.type==='char'">
-        <el-select style="flex-grow: 1" class="item-center" placeholder="输入名称以搜索" v-model="param.value"
-                   filterable remote @input="fetchOption" :filter-method="(p) => {}" @change="$emit('edit')"
-                   @blur="autoSelect">
-          <el-option
-              v-for="option in optionList"
-              :key="option"
-              :label="option"
-              :value="option"
-          />
-        </el-select>
-      </template>
-      <el-button class="item-right" style="padding: 8px 10px" @click="$emit('delete',index)">
-        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" data-v-ea893728="" style="width: 16px">
-          <path fill="currentColor"
-                d="M764.288 214.592 512 466.88 259.712 214.592a31.936 31.936 0 0 0-45.12 45.12L466.752 512 214.528 764.224a31.936 31.936 0 1 0 45.12 45.184L512 557.184l252.288 252.288a31.936 31.936 0 0 0 45.12-45.12L557.12 512.064l252.288-252.352a31.936 31.936 0 1 0-45.12-45.184z"></path>
-        </svg>
-      </el-button>
+    <div>
+        <div style="width: 100%; display: flex">
+            <el-select v-model="param.type" style="width: 80px; flex-shrink: 0" class="item-left"
+                       placeholder="类型" @change="param.value=null; fakeValue=null; optionList=[]; $emit('edit')">
+                <el-option
+                    v-for="(label,key) in SelectType"
+                    :key="key"
+                    :label="label"
+                    :value="key"
+                />
+            </el-select>
+            <template v-if="!param.type">
+                <el-input style="flex-grow: 1" class="item-center" disabled placeholder="请选择类型"></el-input>
+            </template>
+            <template v-else-if="param.type === 'text' || param.type === 'regex'">
+                <el-input style="flex-grow: 1" class="item-center" v-model="param.value"
+                          @change="$emit('edit')"></el-input>
+            </template>
+            <template v-else-if="param.type==='zone' || param.type==='char'">
+                <el-select style="flex-grow: 1" class="item-center" placeholder="输入名称以搜索" v-model="param.value"
+                           filterable remote @input="fetchOption" :filter-method="(p) => {}" @change="$emit('edit')"
+                           @blur="autoSelect">
+                    <el-option
+                        v-for="option in optionList"
+                        :key="option"
+                        :label="option"
+                        :value="option"
+                    />
+                </el-select>
+            </template>
+            <el-button class="item-right" style="padding: 8px 10px" @click="$emit('delete',index)">
+                <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" data-v-ea893728="" style="width: 16px">
+                    <path fill="currentColor"
+                          d="M764.288 214.592 512 466.88 259.712 214.592a31.936 31.936 0 0 0-45.12 45.12L466.752 512 214.528 764.224a31.936 31.936 0 1 0 45.12 45.184L512 557.184l252.288 252.288a31.936 31.936 0 0 0 45.12-45.12L557.12 512.064l252.288-252.352a31.936 31.936 0 1 0-45.12-45.184z"></path>
+                </svg>
+            </el-button>
+        </div>
+        <el-alert v-if="param.type==='char' && props.create" class="alert" type="warning" center>
+            注意：目前仅支持搜索在剧情里出现过的名字
+        </el-alert>
+        <el-alert v-if="!param.value && !props.create" class="alert" type="error" center>
+            此筛选无效
+        </el-alert>
     </div>
-    <el-alert v-if="param.type==='char' && props.create" class="alert" type="warning" center>
-      注意：目前仅支持搜索在剧情里出现过的名字
-    </el-alert>
-    <el-alert v-if="!param.value && !props.create" class="alert" type="error" center>
-      此筛选无效
-    </el-alert>
-  </div>
 </template>
 
 <style>
 .item-left .el-input__wrapper {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  position: relative;
-  left: 1px;
-  background: #f5f7fa;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    position: relative;
+    left: 1px;
+    background: #f5f7fa;
 }
 
 .item-left .is-focus.el-input__wrapper,
 .item-center .is-focus.el-input__wrapper,
 .item-left .el-input__wrapper:hover,
 .item-center .el-input__wrapper:hover {
-  z-index: 1;
+    z-index: 1;
 }
 
 .item-center .el-input__wrapper {
-  border-radius: 0;
+    border-radius: 0;
 }
 
 .item-right {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  position: relative;
-  left: -1px;
-  background: #f5f7fa;
-  color: dimgray;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    position: relative;
+    left: -1px;
+    background: #f5f7fa;
+    color: dimgray;
 }
 
 </style>
 <style scoped>
 .alert {
-  width: 100%;
+    width: 100%;
 }
 </style>
