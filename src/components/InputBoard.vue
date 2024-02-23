@@ -104,7 +104,7 @@ function toSearch () {
           交流群：560295639
         </el-link>
         <span style="border-left: solid 1px darkgrey"></span>
-        <el-link href="https://github.com/Arkfans/MayerTalk" style="margin: 0 5px;"
+        <el-link href="https://github.com/ArknightsSearch/ArknightsSearch-backend" style="margin: 0 5px;"
                  target="_blank">
           GitHub
         </el-link>
