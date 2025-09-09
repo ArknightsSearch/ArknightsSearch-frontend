@@ -97,7 +97,7 @@ async function getJumpUrl(target) {
         ) {
             const n2g = storyInfo.value.name.split(" ");
             if (ng.indexOf("st") !== -1 || ng.indexOf("spst") !== -1) {
-                goto(StoryJumpUrl.prts + n2g.join("_") + "/NBT");
+                return StoryJumpUrl.prts + n2g.join("_") + "/NBT";
             } else if (ng.indexOf("beg") !== -1) {
                 return (
                     StoryJumpUrl.prts +
@@ -198,7 +198,7 @@ defineExpose({
             <div
                 class="block"
                 @click="jump('prts')"
-                v-if="disableType.astr.indexOf(storyInfo.type) === -1"
+                v-if="disableType.prts.indexOf(storyInfo.type) === -1"
             >
                 <h2>PRTS</h2>
                 <p>原生</p>
